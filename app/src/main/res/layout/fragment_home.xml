@@ -34,7 +34,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <Button
-                        android:id="@+id/button8"
+                        android:id="@+id/markAsSafeButton"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:backgroundTint="@color/lightGreen"
@@ -47,7 +47,7 @@
                         android:layout_height="70dp" />
 
                     <Button
-                        android:id="@+id/button9"
+                        android:id="@+id/markAsUnsafeButton"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:backgroundTint="@color/lightRed"
