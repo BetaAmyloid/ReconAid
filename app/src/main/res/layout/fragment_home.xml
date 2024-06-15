@@ -12,50 +12,52 @@
         android:background="@color/brightPink">
 
         <FrameLayout
-            android:layout_width="250dp"
-            android:layout_height="297dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="50dp"
             android:layout_marginBottom="150dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
-                    android:layout_width="248dp"
-                    android:layout_height="295dp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                <Button
+                    android:id="@+id/markAsSafeButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/button_ripple_green"
+                    android:text="Mark as Safe"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    app:cornerRadius="24dp" />
 
-                    <Button
-                        android:id="@+id/markAsSafeButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:backgroundTint="@color/lightGreen"
-                        android:text="Mark as Safe"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp" />
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp" />
-
-                    <Button
-                        android:id="@+id/markAsUnsafeButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:backgroundTint="@color/lightRed"
-                        android:text="Mark as Unsafe"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/markAsUnsafeButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:backgroundTint="@null"
+                    android:background="@drawable/button_ripple_red"
+                    android:text="Mark as Unsafe"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    app:cornerRadius="24dp" />
+            </LinearLayout>
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

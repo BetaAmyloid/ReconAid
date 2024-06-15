@@ -1,7 +1,10 @@
 package com.example.reconaiddev;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.animation.AlphaAnimation;
 
 
 /**
@@ -68,7 +70,7 @@ public class CallFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_call, container, false);
 
-        callSlider = view.findViewById(R.id.call_slider);
+        callSlider = view.findViewById(R.id.call_slider1);
         seekBarText = view.findViewById(R.id.call_slider_text);
 
         //whole of these is for handling the seekbar functions
@@ -78,23 +80,24 @@ public class CallFragment extends Fragment {
 
                 if (progress == 100) {
                     triggerCall();
-                    resetSeekBar();
+                    seekBar.setProgress(99);
+                    seekbarReturnAnimate(seekBar);
                 }
-
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                fadeText();
+                fadeTextOut();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (seekBar.getProgress() < 100) {
-                    resetSeekBar();
+                    seekbarReturnAnimate(seekBar);
                 }
-                seekBarText.setVisibility(View.VISIBLE);
+                fadeTextIn();
+
 
 
             }
@@ -104,10 +107,10 @@ public class CallFragment extends Fragment {
     }
 
     //function for hiding text
-    private void fadeText() {
+    private void fadeTextOut() {
         seekBarText.animate()
                 .alpha(0.0f)
-                .setDuration(150)
+                .setDuration(200)
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -117,10 +120,47 @@ public class CallFragment extends Fragment {
                 });
     }
 
+    //function for showing text fade in
+    private void fadeTextIn() {
+        seekBarText.setVisibility(View.VISIBLE);
+        seekBarText.setAlpha(0.0f);
+        seekBarText.animate()
+                .alpha(1.0f)
+                .setDuration(200)
+                .start();
+
+    }
+
     //resetting the seekbar when calling or when letting go
     private void resetSeekBar() {
         callSlider.setProgress(0);
-        seekBarText.setVisibility(View.VISIBLE);
+    }
+
+    private void seekbarReturnAnimate(SeekBar seekBar) {
+        ObjectAnimator animator = ObjectAnimator.ofInt(seekBar, "progress", 0);
+        animator.setDuration(250);
+        animator.start();
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(@NonNull Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(@NonNull Animator animation) {
+                seekBar.setProgress(0);
+            }
+
+            @Override
+            public void onAnimationCancel(@NonNull Animator animation) {
+                seekBar.setProgress(0);
+            }
+
+            @Override
+            public void onAnimationRepeat(@NonNull Animator animation) {
+
+            }
+        });
     }
 
 

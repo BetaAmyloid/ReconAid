@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //if already on same page do nothing
+                if (currentSelectedButton == locationButton) {
+                    return;
+                }
+                //change fragment
                 switchFragment(new LocationFragment(), true, locationButton);
                 setButtonSelected(locationButton);
             }
@@ -63,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (currentSelectedButton == homeButton) {
+                    return;
+                }
                 switchFragment(new HomeFragment(), true, homeButton);
                 setButtonSelected(homeButton);
             }
@@ -72,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
         contactsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (currentSelectedButton == contactsButton) {
+                    return;
+                }
                 switchFragment(new CallFragment(), true, contactsButton);
                 setButtonSelected(contactsButton);
             }
@@ -79,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //called by setonclicklistener to change fragment and animate the transition
+    //will move left if button is to the left of original button, vice versa
     private void switchFragment(Fragment fragment, boolean animate, ImageButton selectedButton) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -110,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
     //change background color when button is selected
     private void setButtonSelected(ImageButton selectedButton) {
-        if (currentSelectedButton !=null) {
+        if (currentSelectedButton != null) {
             animateButtonColor(currentSelectedButton, getResources().getColor(R.color.darkPink), getResources().getColor(R.color.lightPink));
         }
 
