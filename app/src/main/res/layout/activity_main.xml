@@ -7,63 +7,73 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.reconaiddev.HomeFragment"
-        android:layout_width="394dp"
-        android:layout_height="660dp"
-        android:layout_marginBottom="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="85dp"
-        android:background="@color/lightPink"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
-        app:layout_constraintVertical_bias="1.0">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <Space
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:id="@+id/locationButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/button_background"
-            app:srcCompat="@mipmap/ic_location_foreground" />
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintDimensionRatio="app:layout_constraintTop_toTopOf=&quot;parent&quot;         app:layout_constraintBottom_toTopOf=&quot;@id/linearLayout&quot;         app:layout_constraintHeight_percent=&quot;0.8&quot;         app:layout_constraintLeft_toLeftOf=&quot;parent&quot;         app:layout_constraintRight_toRightOf=&quot;parent&quot;"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/homeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_background"
-            app:srcCompat="@mipmap/ic_home_foreground" />
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView"
+                android:name="com.example.reconaiddev.HomeFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageButton
-            android:id="@+id/callButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_background"
-            app:srcCompat="@mipmap/ic_sms_foreground" />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:background="@color/lightPink"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="720dp">
 
-        <Space
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/locationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/button_background"
+                app:srcCompat="@mipmap/ic_location_foreground" />
+
+            <ImageButton
+                android:id="@+id/homeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/button_background"
+                app:srcCompat="@mipmap/ic_home_foreground" />
+
+            <ImageButton
+                android:id="@+id/callButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/button_background"
+                app:srcCompat="@mipmap/ic_sms_foreground" />
+
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

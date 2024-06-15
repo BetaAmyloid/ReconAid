@@ -55,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
         buttonFragment1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //if already on same page do nothing
+                if (currentSelectedButton == buttonFragment1) {
+                    return;
+                }
+                //change fragment
                 switchFragment(new LocationFragment(), true, buttonFragment1);
                 setButtonSelected(buttonFragment1);
             }
@@ -64,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
         buttonFragment2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (currentSelectedButton == buttonFragment2) {
+                    return;
+                }
                 switchFragment(new HomeFragment(), true, buttonFragment2);
                 setButtonSelected(buttonFragment2);
             }
@@ -73,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         buttonFragment3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (currentSelectedButton == buttonFragment3) {
+                    return;
+                }
                 switchFragment(new CallFragment(), true, buttonFragment3);
                 setButtonSelected(buttonFragment3);
             }
@@ -80,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //called by setonclicklistener to change fragment and animate the transition
+    //will move left if button is to the left of original button, vice versa
     private void switchFragment(Fragment fragment, boolean animate, ImageButton selectedButton) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
