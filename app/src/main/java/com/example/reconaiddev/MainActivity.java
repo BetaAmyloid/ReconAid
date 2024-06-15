@@ -1,13 +1,14 @@
 package com.example.reconaiddev;
 
 import android.animation.ObjectAnimator;
-import android.media.Image;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
+import android.widget.Toast;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -19,11 +20,12 @@ import androidx.fragment.app.FragmentTransaction;
 public class MainActivity extends AppCompatActivity {
 
     //initialize buttons
-    private ImageButton buttonFragment1;
-    private ImageButton buttonFragment2;
-    private ImageButton buttonFragment3;
-
+    private ImageButton locationButton;
+    private ImageButton homeButton;
+    private ImageButton contactsButton;
     private ImageButton currentSelectedButton;
+    private Button markAsSafe;
+    private Button markAsUnsafe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,43 +40,40 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //set buttons to buttons on xml
-        buttonFragment1 = findViewById(R.id.locationButton);
-        buttonFragment2 = findViewById(R.id.homeButton);
-        buttonFragment3 = findViewById(R.id.callButton);
-
-
+        locationButton = findViewById(R.id.locationButton);
+        homeButton = findViewById(R.id.homeButton);
+        contactsButton = findViewById(R.id.contactsButton);
 
         //make home default fragment
         if (savedInstanceState == null) {
             switchFragment(new HomeFragment(), false, null);
-            setButtonSelected(buttonFragment2);
-            currentSelectedButton = buttonFragment2;
+            setButtonSelected(homeButton);
+            currentSelectedButton = homeButton;
         }
-
         //move to location fragment
-        buttonFragment1.setOnClickListener(new View.OnClickListener() {
+        locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchFragment(new LocationFragment(), true, buttonFragment1);
-                setButtonSelected(buttonFragment1);
+                switchFragment(new LocationFragment(), true, locationButton);
+                setButtonSelected(locationButton);
             }
         });
 
         //move to home fragment
-        buttonFragment2.setOnClickListener(new View.OnClickListener() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchFragment(new HomeFragment(), true, buttonFragment2);
-                setButtonSelected(buttonFragment2);
+                switchFragment(new HomeFragment(), true, homeButton);
+                setButtonSelected(homeButton);
             }
         });
 
         //move to call fragment
-        buttonFragment3.setOnClickListener(new View.OnClickListener() {
+        contactsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchFragment(new CallFragment(), true, buttonFragment3);
-                setButtonSelected(buttonFragment3);
+                switchFragment(new CallFragment(), true, contactsButton);
+                setButtonSelected(contactsButton);
             }
         });
     }
@@ -125,5 +124,4 @@ public class MainActivity extends AppCompatActivity {
         colorAnim.setDuration(300);
         colorAnim.start();
     }
-
 }
