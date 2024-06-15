@@ -71,6 +71,7 @@ public class CallFragment extends Fragment {
         callSlider = view.findViewById(R.id.call_slider);
         seekBarText = view.findViewById(R.id.call_slider_text);
 
+        //whole of these is for handling the seekbar functions
         callSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -85,16 +86,7 @@ public class CallFragment extends Fragment {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                seekBarText.animate()
-                        .alpha(0.0f)
-                        .setDuration(100)
-                        .withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
-                                seekBarText.setVisibility(View.GONE);
-                                seekBarText.setAlpha((1.0f));
-                            }
-                        });
+                fadeText();
             }
 
             @Override
@@ -111,11 +103,25 @@ public class CallFragment extends Fragment {
         return view;
     }
 
+    //function for hiding text
+    private void fadeText() {
+        seekBarText.animate()
+                .alpha(0.0f)
+                .setDuration(150)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        seekBarText.setVisibility(View.GONE);
+                        seekBarText.setAlpha((1.0f));
+                    }
+                });
+    }
+
+    //resetting the seekbar when calling or when letting go
     private void resetSeekBar() {
         callSlider.setProgress(0);
         seekBarText.setVisibility(View.VISIBLE);
     }
-
 
 
     private void triggerCall() {
