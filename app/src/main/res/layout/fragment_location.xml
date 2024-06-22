@@ -38,12 +38,15 @@
                 android:layout_height="169dp"
                 android:background="@color/lightPink">
 
-                <TextView
-                    android:id="@+id/textView3"
+                <com.mapbox.mapboxsdk.maps.MapView
+                    android:id="@+id/mapView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Map here" />
+                    />
+<!--                <WebView-->
+<!--                    android:id="@+id/mapView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent" />-->
             </FrameLayout>
 
             <Space
@@ -60,7 +63,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/secondMap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -78,7 +81,7 @@
                         android:textColor="@color/white"
                         android:textSize="36sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView5"
+                        app:layout_constraintStart_toEndOf="@+id/secondMap"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
@@ -97,7 +100,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/secondMap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -115,7 +118,7 @@
                         android:textColor="@color/white"
                         android:textSize="36sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView5"
+                        app:layout_constraintStart_toEndOf="@+id/secondMap"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
@@ -134,7 +137,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/secondMap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -152,7 +155,7 @@
                         android:textColor="@color/white"
                         android:textSize="36sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView5"
+                        app:layout_constraintStart_toEndOf="@+id/secondMap"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
