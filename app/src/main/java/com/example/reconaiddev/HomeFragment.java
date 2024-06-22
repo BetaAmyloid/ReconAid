@@ -22,11 +22,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.OutputStream;
+import java.net.Socket;
+import java.nio.ByteBuffer;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+
+import java.io.OutputStream;
+import java.nio.ByteOrder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +46,17 @@ public class HomeFragment extends Fragment {
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private Button markAsSafe;
-    private Button markAsUnsafe;
+    private Button requestRescue;
+
+    private String esp32IpAddress = "192.168.254.179"; // Replace with your ESP32 IP address
+    private int esp32Port = 80;
+
+    private String phoneNumber = "+639663801375";
+
+    private String Name = "Kim David Clamor";
+
+    private String rescueType = "Trapped";
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,8 +106,13 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        //hidden buttons
+        Button reliefGoods = view.findViewById(R.id.reliefGoods);
+        Button evacuation = view.findViewById(R.id.evacuation);
+        Button trapped = view.findViewById(R.id.trapped);
+
         markAsSafe = view.findViewById(R.id.markAsSafeButton);
-        markAsUnsafe = view.findViewById(R.id.markAsUnsafeButton);
+        requestRescue = view.findViewById(R.id.requestRescue);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         requestPermissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
@@ -100,6 +122,9 @@ public class HomeFragment extends Fragment {
                     }
                 });
 
+        //hidden buttons show
+
+
         markAsSafe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +132,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        markAsUnsafe.setOnClickListener(new View.OnClickListener() {
+        requestRescue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -123,13 +148,15 @@ public class HomeFragment extends Fragment {
     }
 
     private void sendSMS() {
-        String phoneNumber = "+639279166413";
+
         String message = "latitude: " + latitude + ", longitude: " + longitude;
+        sendDataToESP32();
 
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNumber, null, message, null, null);
             Toast.makeText(getContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+
         } catch (Exception e) {
             Toast.makeText(getContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
@@ -164,8 +191,38 @@ public class HomeFragment extends Fragment {
                     Log.d("Latitude", String.valueOf(latitude));
                     Log.d("Longitude", String.valueOf(longitude));
                     sendSMS(); // Send SMS after location is updated
+
+
                 }
             }
         }, getMainLooper());
+    }
+    //send to esp32
+    private void sendDataToESP32() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Socket socket = new Socket(esp32IpAddress, esp32Port);
+                    OutputStream outputStream = socket.getOutputStream();
+                    outputStream.write((phoneNumber + "\n").getBytes());
+                    outputStream.write((Name + "\n").getBytes());
+                    outputStream.write((rescueType + "\n").getBytes());
+                    outputStream.write(doubleToBytes(longitude));
+                    outputStream.write(doubleToBytes(latitude));
+                    outputStream.flush();
+                    socket.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private byte[] doubleToBytes(double value) {
+        ByteBuffer buffer = ByteBuffer.allocate(8);
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        buffer.putDouble(value);
+        return buffer.array();
     }
 }

@@ -45,18 +45,52 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="70dp" />
+                    android:layout_height="35dp" />
 
                 <Button
-                    android:id="@+id/markAsUnsafeButton"
+                    android:id="@+id/requestRescue"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    app:backgroundTint="@null"
                     android:background="@drawable/button_ripple_red"
-                    android:text="Mark as Unsafe"
+                    android:text="Request Rescue"
                     android:textColor="@android:color/black"
                     android:textSize="24sp"
+                    app:backgroundTint="@null"
                     app:cornerRadius="24dp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/reliefGoods"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Relief Goods"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/evacuation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Evacuation"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/trapped"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Trapped"
+                        android:visibility="gone" />
+                </LinearLayout>
             </LinearLayout>
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
