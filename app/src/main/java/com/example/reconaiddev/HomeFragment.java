@@ -48,6 +48,10 @@ public class HomeFragment extends Fragment {
     private Button markAsSafe;
     private Button requestRescue;
 
+    private Button reliefGoods;
+    private Button evacuation;
+    private Button trapped;
+
     private String esp32IpAddress = "192.168.254.179"; // Replace with your ESP32 IP address
     private int esp32Port = 80;
 
@@ -107,12 +111,12 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         //hidden buttons
-        Button reliefGoods = view.findViewById(R.id.reliefGoods);
-        Button evacuation = view.findViewById(R.id.evacuation);
-        Button trapped = view.findViewById(R.id.trapped);
 
         markAsSafe = view.findViewById(R.id.markAsSafeButton);
         requestRescue = view.findViewById(R.id.requestRescue);
+        reliefGoods = view.findViewById(R.id.reliefGoods);
+        evacuation = view.findViewById(R.id.evacuation);
+        trapped = view.findViewById(R.id.trapped);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         requestPermissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
@@ -135,6 +139,18 @@ public class HomeFragment extends Fragment {
         requestRescue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toggleVisibility(reliefGoods);
+                toggleVisibility(evacuation);
+                toggleVisibility(trapped);
+            }
+        });
+
+        reliefGoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                rescueType = "reliefGoods";
+
                 if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
                     requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -143,6 +159,39 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+
+        evacuation.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                rescueType = "evacuation";
+
+                if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+                } else {
+                    getLocation(view);
+                }
+            }
+        });
+
+        trapped.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                rescueType = "trapped";
+
+                if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+                } else {
+                    getLocation(view);
+                }
+            }
+        });
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -150,7 +199,7 @@ public class HomeFragment extends Fragment {
     private void sendSMS() {
 
         String message = "latitude: " + latitude + ", longitude: " + longitude;
-        sendDataToESP32();
+        sendDataToESP32(); //also send data to esp32
 
         try {
             SmsManager smsManager = SmsManager.getDefault();
@@ -191,7 +240,8 @@ public class HomeFragment extends Fragment {
                     Log.d("Latitude", String.valueOf(latitude));
                     Log.d("Longitude", String.valueOf(longitude));
                     sendSMS(); // Send SMS after location is updated
-
+                    //stop sending msgs after first location is sent
+                    fusedLocationClient.removeLocationUpdates(this);
 
                 }
             }
@@ -217,6 +267,14 @@ public class HomeFragment extends Fragment {
                 }
             }
         }).start();
+    }
+
+    private void toggleVisibility(Button button) {
+        if (button.getVisibility() == View.VISIBLE) {
+            button.setVisibility(View.GONE);
+        } else {
+            button.setVisibility(View.VISIBLE);
+        }
     }
 
     private byte[] doubleToBytes(double value) {
