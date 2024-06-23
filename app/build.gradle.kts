@@ -50,4 +50,5 @@ dependencies {
     implementation("org.maplibre.gl:android-sdk:10.0.2")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 
+
 }

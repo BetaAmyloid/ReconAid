@@ -13,6 +13,11 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.Point;
+import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
+import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 
 public class LocationFragment extends Fragment {
     private MapView mapView;
@@ -78,8 +83,8 @@ public class LocationFragment extends Fragment {
 
                 mapboxMap.setStyle(styleUrl);
                 mapboxMap.setCameraPosition(new CameraPosition.Builder()
-                        .target(new LatLng(0.0, 0.0))
-                        .zoom(1.0)
+                        .target(new LatLng(14.3811124, 120.8880586))
+                        .zoom(15.0)
                         .build());
             }
         });

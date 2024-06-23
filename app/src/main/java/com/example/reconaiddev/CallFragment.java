@@ -22,8 +22,15 @@ import android.widget.Toast;
  */
 public class CallFragment extends Fragment {
 
-    private SeekBar callSlider;
-    private TextView seekBarText;
+    private SeekBar callSlider1;
+    private SeekBar callSlider2;
+    private SeekBar callSlider3;
+    private SeekBar callSlider4;
+    private TextView seekBarText1;
+    private TextView seekBarText2;
+    private TextView seekBarText3;
+    private TextView seekBarText4;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,11 +77,17 @@ public class CallFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_call, container, false);
 
-        callSlider = view.findViewById(R.id.call_slider1);
-        seekBarText = view.findViewById(R.id.call_slider_text);
+        callSlider1 = view.findViewById(R.id.call_slider1);
+        callSlider2 = view.findViewById(R.id.call_slider2);
+        callSlider3 = view.findViewById(R.id.call_slider3);
+        callSlider4 = view.findViewById(R.id.call_slider4);
+        seekBarText1 = view.findViewById(R.id.call_slider_text1);
+        seekBarText2 = view.findViewById(R.id.call_slider_text2);
+        seekBarText3 = view.findViewById(R.id.call_slider_text3);
+        seekBarText4 = view.findViewById(R.id.call_slider_text4);
 
         //whole of these is for handling the seekbar functions
-        callSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        callSlider1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
@@ -88,7 +101,7 @@ public class CallFragment extends Fragment {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                fadeTextOut();
+                fadeTextOut1();
             }
 
             @Override
@@ -96,7 +109,94 @@ public class CallFragment extends Fragment {
                 if (seekBar.getProgress() < 100) {
                     seekbarReturnAnimate(seekBar);
                 }
-                fadeTextIn();
+                fadeTextIn1();
+
+
+
+            }
+        });
+
+        callSlider2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                if (progress == 100) {
+                    triggerCall();
+                    seekBar.setProgress(99);
+                    seekbarReturnAnimate(seekBar);
+                }
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                fadeTextOut2();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (seekBar.getProgress() < 100) {
+                    seekbarReturnAnimate(seekBar);
+                }
+                fadeTextIn2();
+
+
+
+            }
+        });
+
+        callSlider3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                if (progress == 100) {
+                    triggerCall();
+                    seekBar.setProgress(99);
+                    seekbarReturnAnimate(seekBar);
+                }
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                fadeTextOut3();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (seekBar.getProgress() < 100) {
+                    seekbarReturnAnimate(seekBar);
+                }
+                fadeTextIn3();
+
+
+
+            }
+        });
+
+        callSlider4.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                if (progress == 100) {
+                    triggerCall();
+                    seekBar.setProgress(99);
+                    seekbarReturnAnimate(seekBar);
+                }
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                fadeTextOut4();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (seekBar.getProgress() < 100) {
+                    seekbarReturnAnimate(seekBar);
+                }
+                fadeTextIn4();
 
 
 
@@ -107,24 +207,93 @@ public class CallFragment extends Fragment {
     }
 
     //function for hiding text
-    private void fadeTextOut() {
-        seekBarText.animate()
+    private void fadeTextOut1() {
+        seekBarText1.animate()
                 .alpha(0.0f)
                 .setDuration(200)
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
-                        seekBarText.setVisibility(View.GONE);
-                        seekBarText.setAlpha((1.0f));
+                        seekBarText1.setVisibility(View.GONE);
+                        seekBarText1.setAlpha((1.0f));
+                    }
+                });
+    }
+
+    private void fadeTextOut2() {
+        seekBarText2.animate()
+                .alpha(0.0f)
+                .setDuration(200)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        seekBarText2.setVisibility(View.GONE);
+                        seekBarText2.setAlpha((1.0f));
+                    }
+                });
+    }
+
+    private void fadeTextOut3() {
+        seekBarText3.animate()
+                .alpha(0.0f)
+                .setDuration(200)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        seekBarText3.setVisibility(View.GONE);
+                        seekBarText3.setAlpha((1.0f));
+                    }
+                });
+    }
+
+    private void fadeTextOut4() {
+        seekBarText4.animate()
+                .alpha(0.0f)
+                .setDuration(200)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        seekBarText4.setVisibility(View.GONE);
+                        seekBarText4.setAlpha((1.0f));
                     }
                 });
     }
 
     //function for showing text fade in
-    private void fadeTextIn() {
-        seekBarText.setVisibility(View.VISIBLE);
-        seekBarText.setAlpha(0.0f);
-        seekBarText.animate()
+    private void fadeTextIn1() {
+        seekBarText1.setVisibility(View.VISIBLE);
+        seekBarText1.setAlpha(0.0f);
+        seekBarText1.animate()
+                .alpha(1.0f)
+                .setDuration(200)
+                .start();
+
+    }
+
+    private void fadeTextIn2() {
+        seekBarText2.setVisibility(View.VISIBLE);
+        seekBarText2.setAlpha(0.0f);
+        seekBarText2.animate()
+                .alpha(1.0f)
+                .setDuration(200)
+                .start();
+
+    }
+
+    private void fadeTextIn3() {
+        seekBarText3.setVisibility(View.VISIBLE);
+        seekBarText3.setAlpha(0.0f);
+        seekBarText3.animate()
+                .alpha(1.0f)
+                .setDuration(200)
+                .start();
+
+    }
+
+    private void fadeTextIn4() {
+        seekBarText4.setVisibility(View.VISIBLE);
+        seekBarText4.setAlpha(0.0f);
+        seekBarText4.animate()
                 .alpha(1.0f)
                 .setDuration(200)
                 .start();
@@ -133,7 +302,10 @@ public class CallFragment extends Fragment {
 
     //resetting the seekbar when calling or when letting go
     private void resetSeekBar() {
-        callSlider.setProgress(0);
+        callSlider1.setProgress(0);
+        callSlider2.setProgress(0);
+        callSlider3.setProgress(0);
+        callSlider4.setProgress(0);
     }
 
     private void seekbarReturnAnimate(SeekBar seekBar) {

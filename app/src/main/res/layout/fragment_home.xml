@@ -72,6 +72,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/button_ripple_red"
+                        android:textColor="@android:color/black"
+                        app:backgroundTint="@null"
                         android:text="Relief Goods"
                         android:visibility="gone" />
 
@@ -80,6 +83,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/button_ripple_red"
+                        android:textColor="@android:color/black"
+                        app:backgroundTint="@null"
                         android:text="Evacuation"
                         android:visibility="gone" />
 
@@ -88,6 +94,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/button_ripple_red"
+                        android:textColor="@android:color/black"
+                        app:backgroundTint="@null"
                         android:text="Trapped"
                         android:visibility="gone" />
                 </LinearLayout>
