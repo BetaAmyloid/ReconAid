@@ -2,6 +2,8 @@ package com.example.reconaiddev;
 
 import static android.os.Looper.getMainLooper;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -59,7 +63,9 @@ public class HomeFragment extends Fragment {
 
     private String Name = "Kim David Clamor";
 
-    private String rescueType = "Trapped";
+    private String rescueType;
+
+    private String command;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -150,6 +156,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
 
                 rescueType = "reliefGoods";
+                command = "verifyAndRequest";
 
                 if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -166,6 +173,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
 
                 rescueType = "evacuation";
+                command = "verifyAndRequest";
 
                 if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -182,6 +190,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
 
                 rescueType = "trapped";
+                command = "verifyAndRequest";
 
                 if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -255,13 +264,28 @@ public class HomeFragment extends Fragment {
                 try {
                     Socket socket = new Socket(esp32IpAddress, esp32Port);
                     OutputStream outputStream = socket.getOutputStream();
+                    outputStream.write((command + "\n").getBytes());
                     outputStream.write((phoneNumber + "\n").getBytes());
                     outputStream.write((Name + "\n").getBytes());
                     outputStream.write((rescueType + "\n").getBytes());
                     outputStream.write(doubleToBytes(longitude));
                     outputStream.write(doubleToBytes(latitude));
                     outputStream.flush();
+
+                    BufferedReader bufferedReader = new BufferedReader((new InputStreamReader(socket.getInputStream())));
+                    String response = bufferedReader.readLine();
                     socket.close();
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if ("Data already exists".equals(response)) {
+                                showAlertDialog();
+                            } else {
+                                Toast.makeText(getContext(), "Data sent successfully.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -282,5 +306,19 @@ public class HomeFragment extends Fragment {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.putDouble(value);
         return buffer.array();
+    }
+
+    private void showAlertDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Data Already Exists")
+                .setMessage("You have already requested rescue. Do you want to update and your information?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        command = "updateDatabase";
+                        sendDataToESP32();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }
